@@ -2,8 +2,16 @@ const { Book, Genre } = require("../models/sequelize");
 const createError = require("http-errors");
 
 // Display list of all Genre.
-exports.genre_list = function (req, res) {
-  res.send("NOT IMPLEMENTED: Genre list");
+exports.genre_list = async function (req, res, next) {
+    try {
+      const genre_list = await Genre.findAll();
+      res.render('genre_list', {
+        title: 'Genre List',
+        genre_list: genre_list,
+    });
+    } catch (error) {
+      next(error);
+    }
 };
 
 // Display detail page for a specific Genre.
